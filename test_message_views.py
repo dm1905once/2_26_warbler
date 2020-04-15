@@ -71,3 +71,12 @@ class MessageViewTestCase(TestCase):
 
             msg = Message.query.one()
             self.assertEqual(msg.text, "Hello")
+
+        # Delete a message
+
+            resp = c.post(f"/messages/{msg.id}/delete")
+
+            # Make sure it redirects
+            self.assertEqual(resp.status_code, 302)
+
+            self.assertEqual(Message.query.get(msg.id), None)
